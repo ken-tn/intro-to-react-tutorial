@@ -49,6 +49,13 @@ class Board extends React.Component {
         />;
     }
 
+    renderRow(i, squares) {
+        return <Row
+            key={"row"+i}
+            squares={squares}
+        />;
+    }
+
     drawRows() {
         const rows = [];
         for (let i = 0; i < 3; i++) {
@@ -56,7 +63,7 @@ class Board extends React.Component {
             for (let j = 0; j < 3; j++) {
                 squares.push(this.renderSquare(i * 3 + j));
             }
-            rows.push(<Row squares={squares} key={"row"+i}/>);
+            rows.push(this.renderRow(i, squares));
         }
 
         return rows;
