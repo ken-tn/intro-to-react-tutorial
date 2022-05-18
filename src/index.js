@@ -43,19 +43,20 @@ function Row(props) {
 class Board extends React.Component {
     renderSquare(i) {
         return <Square
+            key={"sq"+i}
             value={this.props.squares[i]}
             onClick={() => this.props.onClick(i)}
         />;
     }
 
     drawRows() {
-        let rows = [];
+        const rows = [];
         for (let i = 0; i < 3; i++) {
-            let squares = [];
+            const squares = [];
             for (let j = 0; j < 3; j++) {
                 squares.push(this.renderSquare(i * 3 + j));
             }
-            rows.push(Row({squares: squares}));
+            rows.push(<Row squares={squares} key={"row"+i}/>);
         }
 
         return rows;
@@ -116,7 +117,7 @@ class Game extends React.Component {
         const winner = calculateWinner(current.squares);
         const moves = history.map((step, move) => {
             const desc = move ?
-                "Go to move (" + move + ")" :
+                "Go to move #" + move :
                 "Go to game start";
 
             return (
