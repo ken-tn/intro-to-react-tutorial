@@ -32,6 +32,14 @@ function Square(props) {
     );
 }
 
+function Row(props) {
+    return (
+        <div className="board-row">
+            {props.squares}
+        </div>
+    )
+}
+
 class Board extends React.Component {
     renderSquare(i) {
         return <Square
@@ -40,25 +48,24 @@ class Board extends React.Component {
         />;
     }
 
+    drawRows() {
+        let rows = [];
+        for (let i = 0; i < 3; i++) {
+            let squares = [];
+            for (let j = 0; j < 3; j++) {
+                squares.push(this.renderSquare(i * 3 + j));
+            }
+            rows.push(Row({squares: squares}));
+        }
+
+        return rows;
+    }
+
     render() {
         return (
             <React.StrictMode>
                 <div>
-                    <div className="board-row">
-                        {this.renderSquare(0)}
-                        {this.renderSquare(1)}
-                        {this.renderSquare(2)}
-                    </div>
-                    <div className="board-row">
-                        {this.renderSquare(3)}
-                        {this.renderSquare(4)}
-                        {this.renderSquare(5)}
-                    </div>
-                    <div className="board-row">
-                        {this.renderSquare(6)}
-                        {this.renderSquare(7)}
-                        {this.renderSquare(8)}
-                    </div>
+                    {this.drawRows()}
                 </div>
             </React.StrictMode>
         );
@@ -109,7 +116,7 @@ class Game extends React.Component {
         const winner = calculateWinner(current.squares);
         const moves = history.map((step, move) => {
             const desc = move ?
-                "Go to move #" + move :
+                "Go to move (" + move + ")" :
                 "Go to game start";
 
             return (
